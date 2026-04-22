@@ -1,13 +1,10 @@
-const http = require("node:http");
-const path = require("node:path");
-const { readFile, stat } = require("node:fs/promises");
-const { URL } = require("node:url");
-const {
-  getCachedStatus,
-  getStatusForToday,
-  refreshStatus,
-} = require("./src/newsStatus");
+import http from "node:http";
+import path from "node:path";
+import { readFile, stat } from "node:fs/promises";
+import { fileURLToPath, URL } from "node:url";
+import { getCachedStatus, getStatusForToday, refreshStatus } from "./src/newsStatus.js";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT || 3000);
 const HOST = process.env.HOST || "127.0.0.1";
 const PUBLIC_DIR = path.join(__dirname, "public");

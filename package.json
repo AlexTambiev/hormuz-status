@@ -2,10 +2,13 @@
   "name": "hormuz-open-tracker",
   "version": "1.0.0",
   "description": "A daily news-scan tracker for whether the Strait of Hormuz appears open today.",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
+    "cf:dev": "wrangler dev --test-scheduled",
+    "deploy": "wrangler deploy",
     "test": "node --test"
   },
   "keywords": [
@@ -17,5 +20,8 @@
   "license": "MIT",
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "wrangler": "^4.84.1"
   }
 }

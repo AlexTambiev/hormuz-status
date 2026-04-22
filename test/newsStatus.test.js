@@ -1,6 +1,6 @@
-const test = require("node:test");
-const assert = require("node:assert/strict");
-const { classifyItem, verdictFromEvidence } = require("../src/newsStatus");
+import test from "node:test";
+import assert from "node:assert/strict";
+import { classifyItem, verdictFromEvidence } from "../src/statusCore.js";
 
 function item(title, summary = "", source = "Reuters") {
   return {

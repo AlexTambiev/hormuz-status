@@ -43,6 +43,48 @@ test("reopened language is classified as open", () => {
   assert.equal(result.signal, "open");
 });
 
+test("reopening hope language is not classified as open", () => {
+  const result = classifyItem(
+    item("Strait of Hormuz reopening hope grows after Trump pauses Project Freedom"),
+  );
+  assert.notEqual(result.signal, "open");
+});
+
+test("plan to reopen language is not classified as open", () => {
+  const result = classifyItem(
+    item("Trump's abrupt U-turn on plan to reopen Strait of Hormuz came after backlash from allies"),
+  );
+  assert.notEqual(result.signal, "open");
+});
+
+test("contact-us diplomacy headline is not classified as open", () => {
+  const result = classifyItem(
+    item("Shipowners Stay Cautious on Hormuz as Iran Says 'Contact Us'"),
+  );
+  assert.notEqual(result.signal, "open");
+});
+
+test("seeking reopening language is not classified as open", () => {
+  const result = classifyItem(
+    item("Shipowners seek reopening of Strait of Hormuz as talks continue"),
+  );
+  assert.notEqual(result.signal, "open");
+});
+
+test("push to reopen language is not classified as open", () => {
+  const result = classifyItem(
+    item("Regional allies push to reopen Strait of Hormuz after weekend talks"),
+  );
+  assert.notEqual(result.signal, "open");
+});
+
+test("could reopen soon language is not classified as open", () => {
+  const result = classifyItem(
+    item("Strait of Hormuz could reopen soon if Iran talks hold"),
+  );
+  assert.notEqual(result.signal, "open");
+});
+
 test("negated reopening language is not classified as open", () => {
   const result = classifyItem(
     item("Impossible to reopen Strait of Hormuz amid ceasefire breaches", "", "The Guardian"),

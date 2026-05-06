@@ -66,13 +66,19 @@ const NEGATED_STRAIT_CLOSURE_PATTERNS = [
 ];
 
 const OPEN_PATTERNS = [
-  /\bopen(?:s|ed|ing)?\b/,
-  /\breopen(?:s|ed|ing)?\b/,
-  /\bshipping\s+(?:continues|resumes|flows)\b/,
-  /\btraffic\s+(?:continues|resumes|flows)\b/,
-  /\btransit\s+(?:continues|resumes)\b/,
-  /\bpassage\s+(?:continues|resumes)\b/,
-  /\bnavigation\s+(?:continues|resumes)\b/,
+  /\b(?:strait of hormuz|hormuz strait)\s+(?:is\s+)?open\b/,
+  /\b(?:strait of hormuz|hormuz strait)\s+reopen(?:s|ed)\b/,
+  /\breopen(?:s|ed)\s+(?:the\s+)?(?:strait of hormuz|hormuz strait)\b/,
+  /\bshipping\s+(?:through|via)\s+(?:the\s+)?(?:strait of hormuz|hormuz strait)\s+(?:continues|resumes|has resumed|flows)\b/,
+  /\bshipping\s+(?:continues|resumes|has resumed|flows)\s+(?:through|via)\s+(?:the\s+)?(?:strait of hormuz|hormuz strait)\b/,
+  /\btraffic\s+(?:through|via)\s+(?:the\s+)?(?:strait of hormuz|hormuz strait)\s+(?:continues|resumes|has resumed|flows)\b/,
+  /\btraffic\s+(?:continues|resumes|has resumed|flows)\s+(?:through|via)\s+(?:the\s+)?(?:strait of hormuz|hormuz strait)\b/,
+  /\btransit\s+(?:through|via)\s+(?:the\s+)?(?:strait of hormuz|hormuz strait)\s+(?:continues|resumes|has resumed)\b/,
+  /\btransit\s+(?:continues|resumes|has resumed)\s+(?:through|via)\s+(?:the\s+)?(?:strait of hormuz|hormuz strait)\b/,
+  /\bpassage\s+(?:through|via)\s+(?:the\s+)?(?:strait of hormuz|hormuz strait)\s+(?:continues|resumes|has resumed)\b/,
+  /\bpassage\s+(?:continues|resumes|has resumed)\s+(?:through|via)\s+(?:the\s+)?(?:strait of hormuz|hormuz strait)\b/,
+  /\bnavigation\s+(?:through|via)\s+(?:the\s+)?(?:strait of hormuz|hormuz strait)\s+(?:continues|resumes|has resumed)\b/,
+  /\bnavigation\s+(?:continues|resumes|has resumed)\s+(?:through|via)\s+(?:the\s+)?(?:strait of hormuz|hormuz strait)\b/,
 ];
 
 const NEGATED_OPEN_PATTERNS = [
@@ -112,6 +118,12 @@ const HYPOTHETICAL_PATTERNS = [
   /\bcall(?:s|ed|ing)?\s+for\b/,
   /\bvote(?:s|d)?\s+to\b/,
   /\bparliament\b/,
+  /\bhope(?:s|d)?\b/,
+  /\boptimism\b/,
+  /\bprospect(?:s)?\b/,
+  /\bexpected?\s+to\b/,
+  /\baim(?:s|ed|ing)?\s+to\b/,
+  /\btalks?\b/,
   /\bif\b/,
 ];
 
@@ -290,6 +302,10 @@ export function classifyItem(item) {
     signal = "closed";
     weight = 3 + credibility;
     reason = "Mentions reopening, but frames it as impossible or not possible.";
+  } else if (openMatches && hypothetical) {
+    signal = riskMatches ? "risk" : "background";
+    weight = riskMatches ? 1 + credibility : 0;
+    reason = "Mentions opening or reopening language, but only as a hope, plan, or hypothetical.";
   } else if (openMatches) {
     signal = "open";
     weight = (openInTitle ? 3 : 2) + credibility;
